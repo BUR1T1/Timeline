@@ -11,30 +11,13 @@ public class Usuario extends EntityBase {
     @Column(nullable = false)
     private String nome;
 
-    @Column(unique = true)
+    @Column(nullable = false, unique = true)
     private String email;
 
-    private String Cpf;
-
-    private String Email;
-
+    @Column(nullable = false)
     private String senha;
 
-    public String getCpf() {
-        return Cpf;
-    }
-
-    public void setCpf(String cpf) {
-        Cpf = cpf;
-    }
-
-    public String getSenha() {
-        return senha;
-    }
-
-    public void setSenha(String senha) {
-        this.senha = senha;
-    }
+    /* getters e setters */
 
     public String getNome() {
         return nome;
@@ -50,5 +33,13 @@ public class Usuario extends EntityBase {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getSenha() {
+        return senha;
+    }
+
+    public void setSenha(String senha) {
+        this.senha = senha;
     }
 }
