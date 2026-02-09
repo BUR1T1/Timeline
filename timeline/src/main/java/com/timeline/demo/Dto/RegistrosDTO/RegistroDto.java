@@ -4,9 +4,29 @@ import java.time.LocalDate;
 
 public class RegistroDto {
 
+    private Long id;
     private String titulo;
     private String descricao;
     private LocalDate dataInicio;
+    private LocalDate dataFim;
+    private String imagemUrl;
+
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getImagemUrl() {
+        return imagemUrl;
+    }
+
+    public void setImagemUrl(String imagemUrl) {
+        this.imagemUrl = imagemUrl;
+    }
 
     public LocalDate getDataInicio() {
         return dataInicio;
@@ -39,6 +59,4 @@ public class RegistroDto {
     public void setDataFim(LocalDate dataFim) {
         this.dataFim = dataFim;
     }
-
-    private LocalDate dataFim;
 }

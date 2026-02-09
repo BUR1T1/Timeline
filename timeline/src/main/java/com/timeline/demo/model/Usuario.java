@@ -14,7 +14,27 @@ public class Usuario extends EntityBase {
     @Column(unique = true)
     private String email;
 
+    private String Cpf;
+
+    private String Email;
+
     private String senha;
+
+    public String getCpf() {
+        return Cpf;
+    }
+
+    public void setCpf(String cpf) {
+        Cpf = cpf;
+    }
+
+    public String getSenha() {
+        return senha;
+    }
+
+    public void setSenha(String senha) {
+        this.senha = senha;
+    }
 
     public String getNome() {
         return nome;

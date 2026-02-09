@@ -18,9 +18,9 @@ public class Registro extends EntityBase{
     @Column(nullable = false)
     private LocalDate dataInicio;
 
-    // NULL = em andamento
     private LocalDate dataFim;
 
+    private String imagemUrl;
 
     @ManyToOne(optional = true)
     @JoinColumn(name = "usuario_id")
@@ -31,9 +31,14 @@ public class Registro extends EntityBase{
     public boolean isEmAndamento() {
         return dataFim == null;
     }
-    private String imagemUrl;
 
+    public Usuario getUsuario() {
+        return usuario;
+    }
 
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
+    }
 
     public String getImagemUrl() {
         return imagemUrl;
