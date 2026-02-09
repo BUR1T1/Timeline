@@ -10,8 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/registros")
-@CrossOrigin(origins = "*") // libera acesso do front (Next.js)
+@RequestMapping("/usuarios/{usuarioId}/registros")
 public class RegistroController {
 
     private final RegistroService service;
@@ -20,62 +19,60 @@ public class RegistroController {
         this.service = service;
     }
 
-    // =================================================
-    // CRIAR REGISTRO
-    // POST /registros
-    // =================================================
+    // ===============================
+    // Criar um registro
+    // ===============================
     @PostMapping
     public ResponseEntity<RegistroResponseDTO> criar(
+            @PathVariable Long usuarioId,
             @RequestBody RegistroDto dto
     ) {
-        RegistroResponseDTO response = service.criar(dto);
+        RegistroResponseDTO response = service.criar(usuarioId, dto);
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
-    // =================================================
-    // LISTAR TODOS OS REGISTROS
-    // GET /registros
-    // =================================================
+    // ===============================
+    // Criar registros em lote
+    // ===============================
+    @PostMapping("/batch")
+    public ResponseEntity<List<RegistroResponseDTO>> criarEmLote(
+            @PathVariable Long usuarioId,
+            @RequestBody List<RegistroDto> dtos
+    ) {
+        List<RegistroResponseDTO> response = service.criarEmLote(usuarioId, dtos);
+        return ResponseEntity.status(HttpStatus.CREATED).body(response);
+    }
+
+    // ===============================
+    // Listar registros do usuário
+    // ===============================
     @GetMapping
-    public ResponseEntity<List<RegistroResponseDTO>> listarTodos() {
-        List<RegistroResponseDTO> registros = service.listarTodos();
-        return ResponseEntity.ok(registros);
+    public ResponseEntity<List<RegistroResponseDTO>> listar(
+            @PathVariable Long usuarioId
+    ) {
+        return ResponseEntity.ok(service.listarPorUsuario(usuarioId));
     }
 
-    // =================================================
-    // BUSCAR REGISTRO POR ID
-    // GET /registros/{id}
-    // =================================================
-    @GetMapping("/{id}")
+    // ===============================
+    // Buscar registro por ID
+    // ===============================
+    @GetMapping("/{registroId}")
     public ResponseEntity<RegistroResponseDTO> buscarPorId(
-            @PathVariable Long id
+            @PathVariable Long usuarioId,
+            @PathVariable Long registroId
     ) {
-        RegistroResponseDTO registro = service.buscarPorId(id);
-        return ResponseEntity.ok(registro);
+        return ResponseEntity.ok(service.buscarPorId(usuarioId, registroId));
     }
 
-    // =================================================
-    // ATUALIZAR REGISTRO
-    // PUT /registros/{id}
-    // =================================================
-    @PutMapping("/{id}")
-    public ResponseEntity<RegistroResponseDTO> atualizar(
-            @PathVariable Long id,
-            @RequestBody RegistroDto dto
-    ) {
-        RegistroResponseDTO atualizado = service.atualizar(id, dto);
-        return ResponseEntity.ok(atualizado);
-    }
-
-    // =================================================
-    // MOVER PARA LIXEIRA (SOFT DELETE)
-    // DELETE /registros/{id}
-    // =================================================
-    @DeleteMapping("/{id}")
+    // ===============================
+    // Mover registro para lixeira
+    // ===============================
+    @DeleteMapping("/{registroId}")
     public ResponseEntity<Void> moverParaLixeira(
-            @PathVariable Long id
+            @PathVariable Long usuarioId,
+            @PathVariable Long registroId
     ) {
-        service.moverParaLixeira(id);
+        service.moverParaLixeira(usuarioId, registroId);
         return ResponseEntity.noContent().build();
     }
 }
