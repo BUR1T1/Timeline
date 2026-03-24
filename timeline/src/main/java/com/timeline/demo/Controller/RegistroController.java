@@ -19,9 +19,6 @@ public class RegistroController {
         this.service = service;
     }
 
-    // ===============================
-    // Criar um registro
-    // ===============================
     @PostMapping
     public ResponseEntity<RegistroResponseDTO> criar(
             @PathVariable Long usuarioId,
@@ -31,9 +28,6 @@ public class RegistroController {
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
-    // ===============================
-    // Criar registros em lote
-    // ===============================
     @PostMapping("/batch")
     public ResponseEntity<List<RegistroResponseDTO>> criarEmLote(
             @PathVariable Long usuarioId,
@@ -43,9 +37,6 @@ public class RegistroController {
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
-    // ===============================
-    // Listar registros do usuário
-    // ===============================
     @GetMapping
     public ResponseEntity<List<RegistroResponseDTO>> listar(
             @PathVariable Long usuarioId
@@ -53,9 +44,7 @@ public class RegistroController {
         return ResponseEntity.ok(service.listarPorUsuario(usuarioId));
     }
 
-    // ===============================
-    // Buscar registro por ID
-    // ===============================
+
     @GetMapping("/{registroId}")
     public ResponseEntity<RegistroResponseDTO> buscarPorId(
             @PathVariable Long usuarioId,
@@ -64,9 +53,6 @@ public class RegistroController {
         return ResponseEntity.ok(service.buscarPorId(usuarioId, registroId));
     }
 
-    // ===============================
-    // Mover registro para lixeira
-    // ===============================
     @DeleteMapping("/{registroId}")
     public ResponseEntity<Void> moverParaLixeira(
             @PathVariable Long usuarioId,

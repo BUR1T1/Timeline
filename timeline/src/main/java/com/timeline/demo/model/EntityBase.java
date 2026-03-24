@@ -44,8 +44,6 @@ public abstract class EntityBase {
         this.deletadoEm = null;
     }
 
-    /* ===== Getters ===== */
-
     public Long getId() {
         return id;
     }

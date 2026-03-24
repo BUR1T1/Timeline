@@ -11,7 +11,7 @@ public class RegistroDto {
     private LocalDate dataFim;
     private String imagemUrl;
 
-    private Long usuarioId; // 👈 IMPORTANTE
+    private Long usuarioId;
 
     public Long getUsuarioId() {
         return usuarioId;

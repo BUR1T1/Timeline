@@ -26,8 +26,6 @@ public class Registro extends EntityBase{
     @JoinColumn(name = "usuario_id")
     private Usuario usuario;
 
-    /* ===== Regra de domínio ===== */
-
     public boolean isEmAndamento() {
         return dataFim == null;
     }

@@ -17,7 +17,6 @@ public class Usuario extends EntityBase {
     @Column(nullable = false)
     private String senha;
 
-    /* getters e setters */
 
     public String getNome() {
         return nome;

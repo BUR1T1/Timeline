@@ -25,9 +25,6 @@ public class RegistroService {
         this.usuarioRepository = usuarioRepository;
     }
 
-    // ===============================
-    // Criar registro
-    // ===============================
     public RegistroResponseDTO criar(Long usuarioId, RegistroDto dto) {
 
         Usuario usuario = usuarioRepository.findById(usuarioId)
@@ -46,9 +43,7 @@ public class RegistroService {
         return toResponseDTO(salvo);
     }
 
-    // ===============================
-    // Criar registros em lote
-    // ===============================
+
     public List<RegistroResponseDTO> criarEmLote(Long usuarioId, List<RegistroDto> dtos) {
 
         Usuario usuario = usuarioRepository.findById(usuarioId)
@@ -73,9 +68,6 @@ public class RegistroService {
     }
 
 
-    // ===============================
-    // Listar registros por usuário
-    // ===============================
     public List<RegistroResponseDTO> listarPorUsuario(Long usuarioId) {
         return registroRepository.findByUsuarioIdAndDeletadoFalse(usuarioId)
                 .stream()
@@ -83,9 +75,6 @@ public class RegistroService {
                 .toList();
     }
 
-    // ===============================
-    // Buscar registro por ID (seguro)
-    // ===============================
     public RegistroResponseDTO buscarPorId(Long usuarioId, Long registroId) {
 
         Registro registro = registroRepository.findById(registroId)
@@ -98,9 +87,6 @@ public class RegistroService {
         return toResponseDTO(registro);
     }
 
-    // ===============================
-    // Mover para lixeira
-    // ===============================
     public void moverParaLixeira(Long usuarioId, Long registroId) {
 
         Registro registro = registroRepository.findById(registroId)
@@ -114,9 +100,6 @@ public class RegistroService {
         registroRepository.save(registro);
     }
 
-    // ===============================
-    // Mapper
-    // ===============================
     private RegistroResponseDTO toResponseDTO(Registro registro) {
         RegistroResponseDTO dto = new RegistroResponseDTO();
         dto.setId(registro.getId());

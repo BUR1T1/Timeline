@@ -7,7 +7,6 @@ public class UsuarioResponseDto {
     private String nome;
     private String email;
     private String Cpf;
-    private String Email;
     private String senha;
 
     public String getNome() {

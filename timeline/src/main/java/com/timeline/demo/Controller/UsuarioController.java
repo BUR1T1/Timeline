@@ -6,6 +6,7 @@ import com.timeline.demo.Repository.UsuarioRepository;
 import com.timeline.demo.model.Usuario;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -15,18 +16,18 @@ public class UsuarioController {
     @Autowired
     private UsuarioRepository usuarioRepository;
 
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
     @PostMapping
     public ResponseEntity<UsuarioResponseDto> criarUsuario(@RequestBody UsuarioDto usuarioDto) {
-        // Converter DTO para entidade
         Usuario usuario = new Usuario();
         usuario.setNome(usuarioDto.getNome());
         usuario.setEmail(usuarioDto.getEmail());
-        usuario.setSenha(usuarioDto.getSenha());
+        usuario.setSenha(passwordEncoder.encode(usuarioDto.getSenha()));
 
-        // Salvar no banco
         Usuario usuarioSalvo = usuarioRepository.save(usuario);
 
-        // Converter para ResponseDto
         UsuarioResponseDto response = new UsuarioResponseDto();
         response.setNome(usuarioSalvo.getNome());
         response.setEmail(usuarioSalvo.getEmail());
