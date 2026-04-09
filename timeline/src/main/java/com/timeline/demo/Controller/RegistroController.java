@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/usuarios/{usuarioId}/registros")
@@ -21,7 +22,7 @@ public class RegistroController {
 
     @PostMapping
     public ResponseEntity<RegistroResponseDTO> criar(
-            @PathVariable Long usuarioId,
+            @PathVariable UUID usuarioId,
             @RequestBody RegistroDto dto
     ) {
         RegistroResponseDTO response = service.criar(usuarioId, dto);
@@ -30,7 +31,7 @@ public class RegistroController {
 
     @PostMapping("/batch")
     public ResponseEntity<List<RegistroResponseDTO>> criarEmLote(
-            @PathVariable Long usuarioId,
+            @PathVariable UUID usuarioId,
             @RequestBody List<RegistroDto> dtos
     ) {
         List<RegistroResponseDTO> response = service.criarEmLote(usuarioId, dtos);
@@ -39,7 +40,7 @@ public class RegistroController {
 
     @GetMapping
     public ResponseEntity<List<RegistroResponseDTO>> listar(
-            @PathVariable Long usuarioId
+            @PathVariable UUID usuarioId
     ) {
         return ResponseEntity.ok(service.listarPorUsuario(usuarioId));
     }
@@ -47,16 +48,16 @@ public class RegistroController {
 
     @GetMapping("/{registroId}")
     public ResponseEntity<RegistroResponseDTO> buscarPorId(
-            @PathVariable Long usuarioId,
-            @PathVariable Long registroId
+            @PathVariable UUID usuarioId,
+            @PathVariable UUID registroId
     ) {
         return ResponseEntity.ok(service.buscarPorId(usuarioId, registroId));
     }
 
     @DeleteMapping("/{registroId}")
     public ResponseEntity<Void> moverParaLixeira(
-            @PathVariable Long usuarioId,
-            @PathVariable Long registroId
+            @PathVariable UUID usuarioId,
+            @PathVariable UUID registroId
     ) {
         service.moverParaLixeira(usuarioId, registroId);
         return ResponseEntity.noContent().build();

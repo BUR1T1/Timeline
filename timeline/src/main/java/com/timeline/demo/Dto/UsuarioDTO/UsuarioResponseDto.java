@@ -1,12 +1,17 @@
 package com.timeline.demo.Dto.UsuarioDTO;
 
-import jakarta.persistence.Column;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import java.util.UUID;
 
 public class UsuarioResponseDto {
 
+    private UUID id;
     private String nome;
     private String email;
     private String Cpf;
+
+    @JsonIgnore
     private String senha;
 
     public String getNome() {

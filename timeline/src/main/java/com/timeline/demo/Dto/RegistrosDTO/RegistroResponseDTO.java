@@ -1,21 +1,22 @@
 package com.timeline.demo.Dto.RegistrosDTO;
 
 import java.time.LocalDate;
+import java.util.UUID;
 
 public class RegistroResponseDTO {
 
-        private Long id;
+        private UUID id;
         private String titulo;
         private String descricao;
         private LocalDate dataInicio;
         private LocalDate dataFim;
         private String imagemUrl;
 
-    public Long getId() {
+    public UUID getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(UUID id) {
         this.id = id;
     }
 

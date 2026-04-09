@@ -2,13 +2,14 @@ package com.timeline.demo.model;
 
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @MappedSuperclass
 public abstract class EntityBase {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private UUID id;
 
     @Column(nullable = false, updatable = false)
     private LocalDateTime createdAt;
@@ -44,7 +45,7 @@ public abstract class EntityBase {
         this.deletadoEm = null;
     }
 
-    public Long getId() {
+    public UUID getId() {
         return id;
     }
 

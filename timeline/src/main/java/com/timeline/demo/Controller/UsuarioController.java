@@ -22,6 +22,7 @@ public class UsuarioController {
     @PostMapping
     public ResponseEntity<UsuarioResponseDto> criarUsuario(@RequestBody UsuarioDto usuarioDto) {
         Usuario usuario = new Usuario();
+
         usuario.setNome(usuarioDto.getNome());
         usuario.setEmail(usuarioDto.getEmail());
         usuario.setSenha(passwordEncoder.encode(usuarioDto.getSenha()));
