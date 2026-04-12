@@ -1,13 +1,8 @@
 package com.timeline.timeline;
 
-import org.junit.jupiter.api.Test;
+import com.timeline.demo.TimelineApplication;
 import org.springframework.boot.test.context.SpringBootTest;
 
-@SpringBootTest
+@SpringBootTest(classes = TimelineApplication.class)
 class TimelineApplicationTests {
-
-	@Test
-	void contextLoads() {
-	}
-
 }

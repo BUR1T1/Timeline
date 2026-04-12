@@ -24,8 +24,12 @@ public class RegistroService {
         this.usuarioRepository = usuarioRepository;
     }
 
-    private void validarDonoDoRecurso(UUID usuarioIdDaUrl) {
-        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+    private Usuario getUsuarioLogado() {
+        Object principal = SecurityContextHolder
+                .getContext()
+                .getAuthentication()
+                .getPrincipal();
+
         String emailLogado;
 
         if (principal instanceof UserDetails userDetails) {
@@ -34,19 +38,12 @@ public class RegistroService {
             emailLogado = principal.toString();
         }
 
-        Usuario usuarioDaUrl = usuarioRepository.findById(usuarioIdDaUrl)
-                .orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
-
-        if (!usuarioDaUrl.getEmail().equals(emailLogado)) {
-            throw new RuntimeException("Acesso negado: Você não tem permissão para alterar dados de outro usuário.");
-        }
+        return usuarioRepository.findByEmail(emailLogado)
+                .orElseThrow(() -> new RuntimeException("Usuário logado não encontrado"));
     }
 
-    public RegistroResponseDTO criar(UUID usuarioId, RegistroDto dto) {
-        validarDonoDoRecurso(usuarioId);
-
-        Usuario usuario = usuarioRepository.findById(usuarioId)
-                .orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
+    public RegistroResponseDTO criar(RegistroDto dto) {
+        Usuario usuario = getUsuarioLogado();
 
         Registro registro = new Registro();
         registro.setTitulo(dto.getTitulo());
@@ -60,11 +57,8 @@ public class RegistroService {
         return toResponseDTO(salvo);
     }
 
-    public List<RegistroResponseDTO> criarEmLote(UUID usuarioId, List<RegistroDto> dtos) {
-        validarDonoDoRecurso(usuarioId);
-
-        Usuario usuario = usuarioRepository.findById(usuarioId)
-                .orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
+    public List<RegistroResponseDTO> criarEmLote(List<RegistroDto> dtos) {
+       Usuario usuario = getUsuarioLogado();
 
         return dtos.stream().map(dto -> {
             Registro registro = new Registro();
@@ -77,6 +71,24 @@ public class RegistroService {
             return toResponseDTO(registroRepository.save(registro));
         }).toList();
     }
+
+    public void moverParaLixeira(UUID registroId) {
+        Usuario usuario = getUsuarioLogado();
+
+        Registro registro = registroRepository.findById(registroId)
+                .orElseThrow(() -> new RuntimeException("Registro não encontrado"));
+
+        if (!registro.getUsuario().getId().equals(usuario.getId())) {
+            throw new RuntimeException("Acesso negado: O registro não pertence ao usuário logado.");
+        }
+
+        registro.deletar();
+        registroRepository.save(registro);
+    }
+
+    //=======================================================================
+    //ROTAS PULICAS
+    //=======================================================================
 
     public List<RegistroResponseDTO> listarPorUsuario(UUID usuarioId) {
         return registroRepository.findByUsuarioIdAndDeletadoFalse(usuarioId)
@@ -96,23 +108,9 @@ public class RegistroService {
         return toResponseDTO(registro);
     }
 
-    public void moverParaLixeira(UUID usuarioId, UUID registroId) {
-        validarDonoDoRecurso(usuarioId);
-
-        Registro registro = registroRepository.findById(registroId)
-                .orElseThrow(() -> new RuntimeException("Registro não encontrado"));
-
-        if (!registro.getUsuario().getId().equals(usuarioId)) {
-            throw new RuntimeException("Acesso negado: O registro não pertence ao usuário informado.");
-        }
-
-        registro.deletar();
-        registroRepository.save(registro);
-    }
-
     private RegistroResponseDTO toResponseDTO(Registro registro) {
         RegistroResponseDTO dto = new RegistroResponseDTO();
-        dto.setId(registro.getId()); // Adicionado ID no retorno para facilitar edição no Front
+        dto.setId(registro.getId());
         dto.setTitulo(registro.getTitulo());
         dto.setDescricao(registro.getDescricao());
         dto.setDataInicio(registro.getDataInicio());
