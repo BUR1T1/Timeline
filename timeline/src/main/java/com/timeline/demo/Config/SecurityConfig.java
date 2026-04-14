@@ -22,12 +22,10 @@ public class SecurityConfig {
         return http
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/auth/**").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/usuarios/*/registros/**").permitAll()
-                        .requestMatchers(HttpMethod.POST, "/usuarios/*/registros/**").authenticated()
-                        .requestMatchers(HttpMethod.PUT, "/usuarios/*/registros/**").authenticated()
-                        .requestMatchers(HttpMethod.DELETE, "/usuarios/*/registros/**").authenticated()
-                        .anyRequest().authenticated()
+                    .requestMatchers("/auth/**").permitAll()
+                    .requestMatchers(HttpMethod.GET, "/public/**").permitAll()
+                    .requestMatchers("/me/**").authenticated()
+                    .anyRequest().authenticated()
                 )
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();

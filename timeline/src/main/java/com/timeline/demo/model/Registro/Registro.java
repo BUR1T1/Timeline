@@ -1,14 +1,16 @@
-package com.timeline.demo.model;
+package com.timeline.demo.model.Registro;
 
+import com.timeline.demo.model.Registro.Coments.Coments;
+import com.timeline.demo.model.EntityBase;
+import com.timeline.demo.model.Usuario;
 import jakarta.persistence.*;
 
-import javax.xml.crypto.Data;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Table(name = "registro")
-public class Registro extends EntityBase{
+public class Registro extends EntityBase {
 
     @Column(nullable = false)
     private String titulo;
@@ -22,9 +24,12 @@ public class Registro extends EntityBase{
 
     private String imagemUrl;
 
-    @ManyToOne(optional = true)
+    @ManyToOne
     @JoinColumn(name = "usuario_id")
     private Usuario usuario;
+
+    @OneToMany(mappedBy = "COMENTARIOS" )
+    private List<Coments> comentarios;
 
     public boolean isEmAndamento() {
         return dataFim == null;

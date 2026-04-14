@@ -1,21 +1,20 @@
 package com.timeline.demo.Service;
 
 import com.timeline.demo.Dto.UsuarioDTO.UsuarioDto;
-import com.timeline.demo.Dto.UsuarioDTO.UsuarioResponseDto;
 import com.timeline.demo.Repository.UsuarioRepository;
 import com.timeline.demo.model.Usuario;
 import com.timeline.demo.util.JwtUtil;
 import com.timeline.demo.util.PasswordConfig;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestBody;
 
 @Service
 public class UsuarioService {
 
     @Autowired
-    UsuarioRepository userepository;
+    static UsuarioRepository usuarioRepository;
 
     @Autowired
     private PasswordConfig passwordConfig;
@@ -30,10 +29,26 @@ public class UsuarioService {
         usuario.setEmail(usuarioDto.getEmail());
         usuario.setSenha(passwordConfig.passwordEncoder().encode(usuarioDto.getSenha()));
 
-        Usuario usuarioSalvo = userepository.save(usuario);
+        Usuario usuarioSalvo = usuarioRepository.save(usuario);
 
     }
 
+    static Usuario getUsuarioLogado() {
+        Object principal = SecurityContextHolder
+                .getContext()
+                .getAuthentication()
+                .getPrincipal();
 
+        String emailLogado;
+
+        if (principal instanceof UserDetails userDetails) {
+            emailLogado = userDetails.getUsername();
+        } else {
+            emailLogado = principal.toString();
+        }
+
+        return usuarioRepository.findByEmail(emailLogado)
+                .orElseThrow(() -> new RuntimeException("Usuário logado não encontrado"));
+    }
 
 }

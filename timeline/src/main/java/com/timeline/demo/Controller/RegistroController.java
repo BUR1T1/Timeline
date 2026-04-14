@@ -3,7 +3,6 @@ package com.timeline.demo.Controller;
 import com.timeline.demo.Dto.RegistrosDTO.RegistroDto;
 import com.timeline.demo.Dto.RegistrosDTO.RegistroResponseDTO;
 import com.timeline.demo.Service.RegistroService;
-import com.timeline.demo.util.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
