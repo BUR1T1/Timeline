@@ -8,15 +8,17 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
+import java.util.List;
+
 @Entity
 @Table(name = "COMENTARIOS")
 public class Coments extends EntityBase {
 
 
-    private String comentario;
+    private String comentario ;
 
-    private int likes;
-    private int desLike;
+    private List<Like> likes;
+    private List<DesLike> desLike;
 
     @ManyToOne
     @JoinColumn(name = "USUARIO_ID", nullable = false)
@@ -34,20 +36,28 @@ public class Coments extends EntityBase {
         this.comentario = comentario;
     }
 
-    public int getLikes() {
+    public List<Like> getLikes() {
         return likes;
     }
 
-    public void setLikes(int likes) {
+    public void setLikes(List<Like> likes) {
         this.likes = likes;
     }
 
-    public int getDesLike() {
+    public List<DesLike> getDesLike() {
         return desLike;
     }
 
-    public void setDesLike(int desLike) {
+    public void setDesLike(List<DesLike> desLike) {
         this.desLike = desLike;
+    }
+
+    public Registro getRegistro() {
+        return registro;
+    }
+
+    public void setRegistro(Registro registro) {
+        this.registro = registro;
     }
 
     public Usuario getUsuario() {

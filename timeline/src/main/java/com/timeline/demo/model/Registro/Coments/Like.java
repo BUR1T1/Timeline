@@ -33,9 +33,7 @@ public class Like extends EntityBase {
         return coments;
     }
 
-
-
-    public void setComents(UUID coments) {
+    public void setComents(Coments coments) {
         this.coments = coments;
     }
 

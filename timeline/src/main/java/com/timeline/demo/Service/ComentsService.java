@@ -26,8 +26,6 @@ public class ComentsService {
         Coments comentsDtoNew = new Coments();
         comentsDtoNew.setUsuario(usuario);
         comentsDtoNew.setComentario(comentsDto.getComentario());
-        comentsDtoNew.setLikes(0);
-        comentsDtoNew.setDesLike(0);
 
         return comentsRepositoey.save(comentsDtoNew);
     }

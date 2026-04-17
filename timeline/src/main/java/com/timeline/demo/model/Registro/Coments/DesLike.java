@@ -34,4 +34,12 @@ public class DesLike extends EntityBase {
     public void setComents(Coments coments) {
         this.coments = coments;
     }
+
+    public String getTxt() {
+        return txt;
+    }
+
+    public void setTxt(String txt) {
+        this.txt = txt;
+    }
 }
