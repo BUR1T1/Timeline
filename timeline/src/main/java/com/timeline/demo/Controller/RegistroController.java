@@ -25,7 +25,7 @@ public class RegistroController {
     @PostMapping
     public ResponseEntity<RegistroResponseDTO> criar( @RequestBody RegistroDto dto) {
 
-        RegistroResponseDTO response = service.criar(dto);
+        RegistroResponseDTO response = service.criaregistro(dto);
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 

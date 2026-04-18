@@ -1,5 +1,7 @@
 package com.timeline.demo.Dto.RegistrosDTO;
 
+import com.timeline.demo.model.TimeLine;
+
 import java.time.LocalDate;
 import java.util.UUID;
 
@@ -11,8 +13,17 @@ public class RegistroDto {
     private LocalDate dataInicio;
     private LocalDate dataFim;
     private String imagemUrl;
+    private TimeLine timeLine;
 
     private UUID usuarioId;
+
+    public TimeLine getTimeLine() {
+        return timeLine;
+    }
+
+    public void setTimeLine(TimeLine timeLine) {
+        this.timeLine = timeLine;
+    }
 
     public UUID getUsuarioId() {
         return usuarioId;

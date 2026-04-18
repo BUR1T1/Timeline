@@ -89,5 +89,19 @@ public class Registro extends EntityBase {
     }
 
 
+    public TimeLine getTimeLine() {
+        return timeLine;
+    }
 
+    public void setTimeLine(TimeLine timeLine) {
+        this.timeLine = timeLine;
+    }
+
+    public List<Coments> getComentarios() {
+        return comentarios;
+    }
+
+    public void setComentarios(List<Coments> comentarios) {
+        this.comentarios = comentarios;
+    }
 }

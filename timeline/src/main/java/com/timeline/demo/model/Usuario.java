@@ -2,7 +2,10 @@ package com.timeline.demo.model;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
+
+import java.sql.Time;
 
 @Entity
 @Table(name = "usuario")
@@ -17,6 +20,17 @@ public class Usuario extends EntityBase {
     @Column(nullable = false)
     private String senha;
 
+    @OneToOne
+    @Column(name = "TimeLineUser_id")
+    private TimeLine timeLine;
+
+    public TimeLine getTimeLine() {
+        return timeLine;
+    }
+
+    public void setTimeLine(TimeLine timeLine) {
+        this.timeLine = timeLine;
+    }
 
     public String getNome() {
         return nome;

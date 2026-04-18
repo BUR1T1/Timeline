@@ -1,7 +1,9 @@
 package com.timeline.demo.Service;
 
+import com.timeline.demo.Dto.TimelineDto;
 import com.timeline.demo.Dto.UsuarioDTO.UsuarioDto;
 import com.timeline.demo.Repository.UsuarioRepository;
+import com.timeline.demo.model.TimeLine;
 import com.timeline.demo.model.Usuario;
 import com.timeline.demo.util.JwtUtil;
 import com.timeline.demo.util.PasswordConfig;
@@ -20,16 +22,22 @@ public class UsuarioService {
     private PasswordConfig passwordConfig;
 
     @Autowired
+    TimeLineService timeLineService;
+
+    @Autowired
     private JwtUtil jwtUtil;
 
-    public void criarUsuario( UsuarioDto usuarioDto) {
+    public void criarUsuario(UsuarioDto usuarioDto) {
         Usuario usuario = new Usuario();
 
         usuario.setNome(usuarioDto.getNome());
         usuario.setEmail(usuarioDto.getEmail());
         usuario.setSenha(passwordConfig.passwordEncoder().encode(usuarioDto.getSenha()));
+        TimeLine newtime = timeLineService.criarTimeline(usuario);
 
-        Usuario usuarioSalvo = usuarioRepository.save(usuario);
+        usuario.setTimeLine(newtime);
+
+        usuarioRepository.save(usuario);
 
     }
 

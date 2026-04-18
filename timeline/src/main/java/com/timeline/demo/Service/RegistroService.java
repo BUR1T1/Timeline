@@ -2,11 +2,15 @@ package com.timeline.demo.Service;
 
 import com.timeline.demo.Dto.RegistrosDTO.RegistroDto;
 import com.timeline.demo.Dto.RegistrosDTO.RegistroResponseDTO;
+import com.timeline.demo.Dto.TimelineDto;
 import com.timeline.demo.Repository.ComentsRepository;
 import com.timeline.demo.Repository.RegistroRepository;
+import com.timeline.demo.Repository.TimeLineRepository;
 import com.timeline.demo.Repository.UsuarioRepository;
 import com.timeline.demo.model.Registro.Registro;
+import com.timeline.demo.model.TimeLine;
 import com.timeline.demo.model.Usuario;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,20 +19,20 @@ import java.util.UUID;
 @Service
 public class RegistroService {
 
-    private final RegistroRepository registroRepository;
-    private final UsuarioRepository usuarioRepository;
-    private final ComentsRepository comentsRepository;
+    @Autowired
+    private  RegistroRepository registroRepository;
 
-    public RegistroService(ComentsRepository comentsRepository, RegistroRepository registroRepository, UsuarioRepository usuarioRepository) {
-        this.registroRepository = registroRepository;
-        this.usuarioRepository = usuarioRepository;
-        this.comentsRepository = comentsRepository;
-    }
+    @Autowired
+    private  UsuarioRepository usuarioRepository;
+
+    @Autowired
+    private  ComentsRepository comentsRepository;
+
+    @Autowired
+    private TimeLineRepository timeLineRepository;
 
 
-
-    public RegistroResponseDTO criar(RegistroDto dto) {
-        Usuario usuario = UsuarioService.getUsuarioLogado();
+    public RegistroResponseDTO criaregistro(RegistroDto dto) {
 
         Registro registro = new Registro();
         registro.setTitulo(dto.getTitulo());
@@ -36,14 +40,17 @@ public class RegistroService {
         registro.setDataInicio(dto.getDataInicio());
         registro.setDataFim(dto.getDataFim());
         registro.setImagemUrl(dto.getImagemUrl());
-        registro.setUsuario(usuario);
+
+
+        UUID timelineId = dto.getTimeLine().getId();
+        TimeLine timeLine = timeLineRepository.findById(timelineId).orElseThrow(() -> new RuntimeException("timeLine não encontrada"));
+        registro.setTimeLine(timeLine);
 
         Registro salvo = registroRepository.save(registro);
         return toResponseDTO(salvo);
     }
 
     public List<RegistroResponseDTO> criarEmLote(List<RegistroDto> dtos) {
-       Usuario usuario = UsuarioService.getUsuarioLogado();
 
         return dtos.stream().map(dto -> {
             Registro registro = new Registro();
@@ -52,7 +59,12 @@ public class RegistroService {
             registro.setDataInicio(dto.getDataInicio());
             registro.setDataFim(dto.getDataFim());
             registro.setImagemUrl(dto.getImagemUrl());
-            registro.setUsuario(usuario);
+
+            UUID timelineId = dto.getTimeLine().getId();
+            TimeLine timeLine = timeLineRepository.findById(timelineId).orElseThrow(() -> new RuntimeException("timeLine não encontrada"));
+            registro.setTimeLine(timeLine);
+
+
             return toResponseDTO(registroRepository.save(registro));
         }).toList();
     }

@@ -21,13 +21,8 @@ public class LikeSevice {
     LikeRepository likeRepository;
 
     @Autowired
-    RegistroRepository registroRepository;
-
-    @Autowired
     ComentsRepository comentsRepository;
 
-    @Autowired
-    UsuarioRepository usuarioRepository;
 
     public Like criarLike(LikeDto likeDto){
         Usuario usuario = getUsuarioLogado();
