@@ -1,10 +1,5 @@
 package com.timeline.demo.Dto.RegistrosDTO.comentsDTO;
 
-import com.timeline.demo.model.Usuario;
-import jakarta.persistence.Column;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-
 import java.time.LocalDateTime;
 import java.util.UUID;
 
@@ -15,7 +10,7 @@ public class ComentsDto {
     private String comentario;
 
     private UUID usuario_id;
-    private UUID registro_id;
+    private UUID timeline_id;
 
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
@@ -60,11 +55,11 @@ public class ComentsDto {
         this.usuario_id = usuario_id;
     }
 
-    public UUID getRegistro_id() {
-        return registro_id;
+    public UUID getTimeline_id() {
+        return timeline_id;
     }
 
-    public void setRegistro_id(UUID registro_id) {
-        this.registro_id = registro_id;
+    public void setTimeline_id(UUID timeline_id) {
+        this.timeline_id = timeline_id;
     }
 }

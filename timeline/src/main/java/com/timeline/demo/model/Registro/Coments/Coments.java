@@ -2,6 +2,7 @@ package com.timeline.demo.model.Registro.Coments;
 
 import com.timeline.demo.model.EntityBase;
 import com.timeline.demo.model.Registro.Registro;
+import com.timeline.demo.model.TimeLine;
 import com.timeline.demo.model.Usuario;
 import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
@@ -25,8 +26,8 @@ public class Coments extends EntityBase {
     private Usuario usuario;
 
     @ManyToOne
-    @JoinColumn(name = "REGISTRO_id", nullable = false)
-    private Registro registro;
+    @JoinColumn(name = "TIMELINE_id", nullable = false)
+    private TimeLine timeLine;
 
     public String getComentario() {
         return comentario;
@@ -52,12 +53,12 @@ public class Coments extends EntityBase {
         this.desLike = desLike;
     }
 
-    public Registro getRegistro() {
-        return registro;
+    public TimeLine getTimeLine() {
+        return timeLine;
     }
 
-    public void setRegistro(Registro registro) {
-        this.registro = registro;
+    public void setTimeLine(TimeLine timeLine) {
+        this.timeLine = timeLine;
     }
 
     public Usuario getUsuario() {

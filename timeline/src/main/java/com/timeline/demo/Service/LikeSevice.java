@@ -24,7 +24,7 @@ public class LikeSevice {
     RegistroRepository registroRepository;
 
     @Autowired
-    ComentsRepositoey comentsRepositoey;
+    ComentsRepository comentsRepository;
 
     @Autowired
     UsuarioRepository usuarioRepository;
@@ -40,7 +40,7 @@ public class LikeSevice {
     public Like buscarLike(UUID comentarioId, UUID usuarioId){
         Usuario usuario = getUsuarioLogado();
 
-        Coments coments = comentsRepositoey.findById(comentarioId).orElseThrow(()
+        Coments coments = comentsRepository.findById(comentarioId).orElseThrow(()
         -> new RuntimeException("Comentario não encontrado"));
 
         List<Like> likes = likeRepository.existsByUsuarioAndComents(usuario, coments);
@@ -54,7 +54,7 @@ public class LikeSevice {
 
     public void darLike(UUID comentarioId) {
         Usuario usuario = getUsuarioLogado();
-        Coments coments = comentsRepositoey.findById(comentarioId).orElseThrow(() -> new RuntimeException("Comentário não encontrado"));
+        Coments coments = comentsRepository.findById(comentarioId).orElseThrow(() -> new RuntimeException("Comentário não encontrado"));
 
         List<Like> likes = likeRepository.existsByUsuarioAndComents(usuario, coments);
         for (Like likesexist : likes) {
@@ -77,4 +77,6 @@ public class LikeSevice {
 
         likeRepository.save(like);
     }
+
+
 }

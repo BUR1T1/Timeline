@@ -34,8 +34,8 @@ public abstract class EntityBase {
     }
 
 
-    public void setId(UUID id) {
-        this.id = id;
+    public UUID getId() {
+        return id;
     }
 
     public void setCreatedAt(LocalDateTime createdAt) {
@@ -62,10 +62,6 @@ public abstract class EntityBase {
     public void restaurar() {
         this.deletado = false;
         this.deletadoEm = null;
-    }
-
-    public UUID getId() {
-        return id;
     }
 
     public LocalDateTime getCreatedAt() {

@@ -2,11 +2,9 @@ package com.timeline.demo.Service;
 
 import com.timeline.demo.Dto.RegistrosDTO.RegistroDto;
 import com.timeline.demo.Dto.RegistrosDTO.RegistroResponseDTO;
-import com.timeline.demo.Repository.ComentsRepositoey;
+import com.timeline.demo.Repository.ComentsRepository;
 import com.timeline.demo.Repository.RegistroRepository;
 import com.timeline.demo.Repository.UsuarioRepository;
-import com.timeline.demo.model.Registro.Coments.Coments;
-import com.timeline.demo.model.Registro.Coments.Like;
 import com.timeline.demo.model.Registro.Registro;
 import com.timeline.demo.model.Usuario;
 import org.springframework.stereotype.Service;
@@ -14,19 +12,17 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.UUID;
 
-import static com.timeline.demo.Service.UsuarioService.getUsuarioLogado;
-
 @Service
 public class RegistroService {
 
     private final RegistroRepository registroRepository;
     private final UsuarioRepository usuarioRepository;
-    private final ComentsRepositoey comentsRepositoey;
+    private final ComentsRepository comentsRepository;
 
-    public RegistroService(ComentsRepositoey comentsRepositoey,RegistroRepository registroRepository, UsuarioRepository usuarioRepository) {
+    public RegistroService(ComentsRepository comentsRepository, RegistroRepository registroRepository, UsuarioRepository usuarioRepository) {
         this.registroRepository = registroRepository;
         this.usuarioRepository = usuarioRepository;
-        this.comentsRepositoey = comentsRepositoey;
+        this.comentsRepository = comentsRepository;
     }
 
 

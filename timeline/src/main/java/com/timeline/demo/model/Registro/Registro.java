@@ -2,6 +2,7 @@ package com.timeline.demo.model.Registro;
 
 import com.timeline.demo.model.Registro.Coments.Coments;
 import com.timeline.demo.model.EntityBase;
+import com.timeline.demo.model.TimeLine;
 import com.timeline.demo.model.Usuario;
 import jakarta.persistence.*;
 
@@ -11,6 +12,10 @@ import java.util.List;
 @Entity
 @Table(name = "registro")
 public class Registro extends EntityBase {
+
+    @ManyToOne
+    @JoinColumn(name = "TIMELINE_Id")
+    private TimeLine timeLine;
 
     @Column(nullable = false)
     private String titulo;
