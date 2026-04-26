@@ -1,6 +1,5 @@
 package com.timeline.demo.Service;
 import com.timeline.demo.Repository.TimeLineRepository;
-import com.timeline.demo.Repository.UsuarioRepository;
 import com.timeline.demo.model.TimeLine;
 import com.timeline.demo.model.Usuario;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,16 +11,27 @@ public class TimeLineService {
     @Autowired
     TimeLineRepository timeLineRepository;
 
-    @Autowired
-    UsuarioRepository usuarioRepository;
 
     public TimeLine criarTimeline(Usuario usuario){
         TimeLine newtimeline = new TimeLine();
         newtimeline.setUsuario(usuario);
-        timeLineRepository.save(newtimeline);
 
-        return newtimeline;
+        return timeLineRepository.save(newtimeline);
     }
+
+
+    //=======================================================================
+    //ROTAS PUBLICAS
+    //=======================================================================
+
+    public TimeLine chamarTimeline(Usuario usuario){
+
+        TimeLine timeline = timeLineRepository.findByUsuario(usuario)
+                .orElseThrow(() -> new RuntimeException("Usuario não encontrado"));
+
+        return timeline;
+    }
+
 
 
 }

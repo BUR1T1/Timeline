@@ -1,9 +1,6 @@
 package com.timeline.demo.model;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.OneToOne;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 import java.sql.Time;
 
@@ -21,7 +18,7 @@ public class Usuario extends EntityBase {
     private String senha;
 
     @OneToOne
-    @Column(name = "TimeLineUser_id")
+    @JoinColumn(name = "TimeLineUser_id")
     private TimeLine timeLine;
 
     public TimeLine getTimeLine() {

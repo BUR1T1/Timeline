@@ -18,7 +18,7 @@ public class TimeLine extends EntityBase {
     private List<Registro> registros;
 
     @OneToMany
-    @Column(name = "Comentario")
+    @Column(name = "Coments")
     private List<Coments> coments;
 
     public Usuario getUsuario() {

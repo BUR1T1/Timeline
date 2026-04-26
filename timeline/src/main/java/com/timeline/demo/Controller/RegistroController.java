@@ -29,15 +29,9 @@ public class RegistroController {
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
-    @PostMapping("/batch")
-    public ResponseEntity<List<RegistroResponseDTO>> criarEmLote(@RequestBody List<RegistroDto> dtos) {
-        List<RegistroResponseDTO> response = service.criarEmLote(dtos);
-        return ResponseEntity.status(HttpStatus.CREATED).body(response);
-    }
-
     @DeleteMapping("/{registroId}")
-    public ResponseEntity<Void> moverParaLixeira(@PathVariable UUID registroId) {
-        service.moverParaLixeira(registroId);
+    public ResponseEntity<Void> moverParaLixeira(@PathVariable UUID registroId, UUID timelineId) {
+        service.moverParaLixeira(registroId,timelineId);
         return ResponseEntity.noContent().build();
     }
 }

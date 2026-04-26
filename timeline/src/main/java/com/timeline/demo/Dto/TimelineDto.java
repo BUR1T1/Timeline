@@ -3,11 +3,6 @@ package com.timeline.demo.Dto;
 import com.timeline.demo.model.Registro.Coments.Coments;
 import com.timeline.demo.model.Registro.Registro;
 import com.timeline.demo.model.Usuario;
-import jakarta.persistence.Column;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.OneToOne;
-
 import java.util.List;
 
 public class TimelineDto {

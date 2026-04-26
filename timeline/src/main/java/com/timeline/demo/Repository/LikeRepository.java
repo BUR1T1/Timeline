@@ -13,5 +13,5 @@ public interface LikeRepository extends BaseRepository<Like>{
     @Override
     Optional<Like> findById(UUID uuid);
 
-    List<Like> existsByUsuarioAndComents(Usuario usuario, Coments coments);
+    Optional<Like> existsByUsuarioAndComents(Usuario usuario, Coments coments);
 }

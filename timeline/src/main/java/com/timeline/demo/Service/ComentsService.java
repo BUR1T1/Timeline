@@ -10,9 +10,8 @@ import com.timeline.demo.model.Usuario;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.UUID;
-
-import static com.timeline.demo.Service.UsuarioService.getUsuarioLogado;
 
 @Service
 public class ComentsService {
@@ -26,9 +25,12 @@ public class ComentsService {
     @Autowired
     TimeLineRepository timeLineRepository;
 
+    @Autowired
+    UsuarioService usuarioService;
+
     public Coments criarComntario(ComentsDto comentsDto, UUID timeLineId){
 
-        Usuario usuario = getUsuarioLogado();
+        Usuario usuario = usuarioService.getUsuarioLogado();
         TimeLine timeLine = timeLineRepository.findById(timeLineId).orElseThrow(()
         -> new RuntimeException("Time line não encontrada"));
 
@@ -40,19 +42,50 @@ public class ComentsService {
         return comentsRepository.save(comentsDtoNew);
     }
 
-    public void adicionarComnetario(UUID timelineId, UUID comentsId){
+    // Falta listar comentários por timeline.
+    public List<Coments> listarComents(UUID timlineId){
 
-        Coments coments = comentsRepository.findById(comentsId).orElseThrow(
-                ()-> new RuntimeException("Comentaio não encontrado"));
+        TimeLine timeLine = timeLineRepository.findById(timlineId).orElseThrow(() -> new RuntimeException("timeline não encontrada"));
 
-        TimeLine timeLine = timeLineRepository.findById(timelineId).orElseThrow(
-                () -> new RuntimeException("Time line não encontrada"));
+        if (timeLine.getComents() == null){
+            return List.of();
+        }
 
-        coments.setTimeLine(timeLine);
-        comentsRepository.save(coments);
+        return timeLine.getComents()
+                .stream()
+                .filter(objcoments -> !objcoments.isDeletado())
+                .toList();
     }
 
+    //Falta deletar comentário, se isso entrar na v1.
+    public Coments inativarComentario(UUID timeLineId, UUID comentsId){
+        Usuario usuario = usuarioService.getUsuarioLogado();
+        TimeLine timeLine = timeLineRepository.findById(timeLineId).orElseThrow(() -> new RuntimeException("timeline não encontrada"));
+        Coments coments = comentsRepository.findById(comentsId).orElseThrow(() -> new RuntimeException("Comentario não encontrado "));
 
+        usuarioDono(usuario,timeLine);
+
+        coments.isDeletado();
+
+        return comentsRepository.save(coments);
+
+    }
+
+    public void deletarPermanent(UUID timeLineId, UUID comentsId){
+        Usuario usuario = usuarioService.getUsuarioLogado();
+        TimeLine timeLine = timeLineRepository.findById(timeLineId).orElseThrow(() -> new RuntimeException("timeline não encontrada"));
+        Coments coments = comentsRepository.findById(comentsId).orElseThrow(() -> new RuntimeException("Comentario não encontrado "));
+
+        usuarioDono(usuario,timeLine);
+        comentsRepository.delete(coments);
+
+    }
+
+    public void usuarioDono(Usuario user, TimeLine line){
+        if (!line.getUsuario().getId().equals(user.getId())) {
+            throw new RuntimeException("Acesso negado");
+        }
+    }
 
 
 

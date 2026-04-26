@@ -4,14 +4,15 @@ import com.timeline.demo.Dto.RegistrosDTO.comentsDTO.likeDto.DesLikeDto;
 import com.timeline.demo.Repository.*;
 import com.timeline.demo.model.Registro.Coments.Coments;
 import com.timeline.demo.model.Registro.Coments.DesLike;
+import com.timeline.demo.model.Registro.Coments.Like;
 import com.timeline.demo.model.Usuario;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
-import static com.timeline.demo.Service.UsuarioService.getUsuarioLogado;
 
 @Service
 public class DesLikeService {
@@ -31,8 +32,11 @@ public class DesLikeService {
     @Autowired
     DeslikeRepository deslikeRepository;
 
+    @Autowired
+    UsuarioService usuarioService;
+
     public DesLike criarDeslike(DesLikeDto desLikeDto){
-        Usuario usuario = getUsuarioLogado();
+        Usuario usuario = usuarioService.getUsuarioLogado();
 
         DesLike newdesLike = new DesLike();
         newdesLike.setUsuario(usuario);
@@ -55,14 +59,33 @@ public class DesLikeService {
 
     public void darDeslike(UUID comentarioId){
 
-        Usuario usuario = getUsuarioLogado();
-
+        Usuario usuario = usuarioService.getUsuarioLogado();
         Coments coments = comentsRepository.findById(comentarioId).orElseThrow(() -> new RuntimeException("Comentario não encontrado"));
 
+        Optional<DesLike> desLikeList = deslikeRepository.existsByUsuarioAndComents(usuario,coments);
+        for (DesLike desLikeExist : coments.getDesLike()){
+            if (desLikeExist.getUsuario().getId().equals(usuario.getId()) && !desLikeExist.isDeletado()){
+                return;
+            }
+        }
 
+        List<Like> likes = coments.getLikes();
+        for (Like likeExist : likes){
+            if (likeExist.getUsuario().getId().equals(usuario.getId()) && !likeExist.isDeletado()) {
+                likeExist.deletar();
+                return;
+            }
+        }
 
+        DesLike desLike = new DesLike();
+        desLike.setUsuario(usuario);
+        desLike.setComents(coments);
+
+        deslikeRepository.save(desLike);
     }
 
+
+    //criar metodo de retirar likes apagalos por inteiro
 
 
 

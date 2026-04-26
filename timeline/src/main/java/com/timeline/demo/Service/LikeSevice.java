@@ -10,9 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
-import static com.timeline.demo.Service.UsuarioService.getUsuarioLogado;
 
 @Service
 public class LikeSevice {
@@ -23,23 +23,17 @@ public class LikeSevice {
     @Autowired
     ComentsRepository comentsRepository;
 
-
-    public Like criarLike(LikeDto likeDto){
-        Usuario usuario = getUsuarioLogado();
-        Like newLike = new Like();
-        newLike.setUsuario(usuario);
-        newLike.setTxt(likeDto.getTxt());
-        return likeRepository.save(newLike);
-    }
+    @Autowired
+    UsuarioService usuarioService;
 
     public Like buscarLike(UUID comentarioId, UUID usuarioId){
-        Usuario usuario = getUsuarioLogado();
+        Usuario usuario = usuarioService.getUsuarioLogado();
 
         Coments coments = comentsRepository.findById(comentarioId).orElseThrow(()
         -> new RuntimeException("Comentario não encontrado"));
 
-        List<Like> likes = likeRepository.existsByUsuarioAndComents(usuario, coments);
-        for (Like like : likes) {
+        Optional<Like> likes = likeRepository.existsByUsuarioAndComents(usuario, coments);
+        for (Like like : coments.getLikes()) {
             if (like.getUsuario().getId().equals(usuarioId)) {
                 return like;
             }
@@ -47,12 +41,21 @@ public class LikeSevice {
         return null;
     }
 
+    private Like criarLike(LikeDto likeDto){
+        Usuario usuario = usuarioService.getUsuarioLogado();
+        Like newLike = new Like();
+        newLike.setUsuario(usuario);
+        newLike.setTxt(likeDto.getTxt());
+        return likeRepository.save(newLike);
+    }
+
+
     public void darLike(UUID comentarioId) {
-        Usuario usuario = getUsuarioLogado();
+        Usuario usuario = usuarioService.getUsuarioLogado();
         Coments coments = comentsRepository.findById(comentarioId).orElseThrow(() -> new RuntimeException("Comentário não encontrado"));
 
-        List<Like> likes = likeRepository.existsByUsuarioAndComents(usuario, coments);
-        for (Like likesexist : likes) {
+        Optional<Like> likes = likeRepository.existsByUsuarioAndComents(usuario, coments);
+        for (Like likesexist : coments.getLikes()) {
             if (likesexist.getUsuario().getId().equals(usuario.getId()) && !likesexist.isDeletado()) {
                 System.out.println("Usuario já curtiu essa publicação");
                 return;
@@ -66,9 +69,7 @@ public class LikeSevice {
             }
         }
 
-        Like like = new Like();
-        like.setUsuario(usuario);
-        like.setComents(coments);
+        Like like = criarLike()
 
         likeRepository.save(like);
     }

@@ -1,24 +1,22 @@
 package com.timeline.demo.model.Registro.Coments;
 
 import com.timeline.demo.model.EntityBase;
-import com.timeline.demo.model.Registro.Registro;
 import com.timeline.demo.model.TimeLine;
 import com.timeline.demo.model.Usuario;
-import jakarta.persistence.Entity;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 import java.util.List;
 
 @Entity
-@Table(name = "COMENTARIOS")
+@Table(name = "Coments")
 public class Coments extends EntityBase {
-
 
     private String comentario ;
 
+    @ManyToOne
     private List<Like> likes;
+
+    @ManyToOne
     private List<DesLike> desLike;
 
     @ManyToOne

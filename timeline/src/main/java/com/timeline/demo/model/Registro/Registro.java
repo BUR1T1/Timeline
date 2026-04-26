@@ -1,13 +1,11 @@
 package com.timeline.demo.model.Registro;
 
-import com.timeline.demo.model.Registro.Coments.Coments;
 import com.timeline.demo.model.EntityBase;
 import com.timeline.demo.model.TimeLine;
 import com.timeline.demo.model.Usuario;
 import jakarta.persistence.*;
-
 import java.time.LocalDate;
-import java.util.List;
+
 
 @Entity
 @Table(name = "registro")
@@ -33,8 +31,6 @@ public class Registro extends EntityBase {
     @JoinColumn(name = "usuario_id")
     private Usuario usuario;
 
-    @OneToMany(mappedBy = "COMENTARIOS" )
-    private List<Coments> comentarios;
 
     public boolean isEmAndamento() {
         return dataFim == null;
@@ -97,11 +93,5 @@ public class Registro extends EntityBase {
         this.timeLine = timeLine;
     }
 
-    public List<Coments> getComentarios() {
-        return comentarios;
-    }
 
-    public void setComentarios(List<Coments> comentarios) {
-        this.comentarios = comentarios;
-    }
 }
