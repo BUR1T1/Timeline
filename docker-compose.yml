@@ -1,0 +1,28 @@
+services:
+
+  db:
+    image: postgres
+    container_name: timeline-db
+    environment:
+      POSTGRES_DB: timeline_db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: root
+    ports:
+      - "5432:5432"
+
+  backend:
+    build: ./timeline
+    container_name: timeline-backend
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db
+    restart: always
+
+  frontend:
+    build: ./Front-end/timeline
+    container_name: timeline-frontend
+    ports:
+      - "3000:80"
+    depends_on:
+      - backend

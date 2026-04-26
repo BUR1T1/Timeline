@@ -1,0 +1,194 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background: #0a0a0a;
+}
+
+.registro {
+    position: relative;
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    color: #fff;
+    font-family: "Bebas Neue", sans-serif;
+    background: radial-gradient(circle at center, #111 0%, #050505 100%);
+}
+
+.fundo-animado {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+}
+
+.bloco {
+    position: absolute;
+    border-radius: 18px;
+    overflow: hidden;
+    opacity: 0;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.75);
+    animation: moverDiagonal 34s linear infinite;
+}
+
+.bloco::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: rgba(255, 89, 0, 0.18);
+    border: 1px solid rgba(255, 89, 0, 0.18);
+}
+
+.bloco-imagem {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.bloco:nth-child(1) { top: -15%; left: -20%; width: 420px; height: 280px; animation-delay: -34s; }
+.bloco:nth-child(2) { top: 12%; left: -28%; width: 470px; height: 320px; animation-delay: -28s; }
+.bloco:nth-child(3) { top: 45%; left: -35%; width: 390px; height: 270px; animation-delay: -22s; }
+.bloco:nth-child(4) { top: -35%; left: 12%; width: 430px; height: 300px; animation-delay: -16s; }
+.bloco:nth-child(5) { top: 5%; left: 28%; width: 460px; height: 310px; animation-delay: -10s; }
+.bloco:nth-child(6) { top: 68%; left: -18%; width: 410px; height: 280px; animation-delay: -4s; }
+
+@keyframes moverDiagonal {
+    0% { transform: translate(0, 0) rotate(38deg); opacity: 0; }
+    8% { opacity: 0.55; }
+    92% { opacity: 0.55; }
+    100% { transform: translate(150vw, 125vh) rotate(38deg); opacity: 0; }
+}
+
+.formulario {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    max-width: 460px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 42px 34px;
+    border-radius: 18px;
+    background: rgba(12, 12, 12, 0.92);
+    border: 1px solid rgba(255, 89, 0, 0.22);
+    backdrop-filter: blur(24px);
+    box-shadow: 0 25px 70px rgba(0, 0, 0, 0.8);
+}
+
+.titulo-form {
+    font-size: 3rem;
+    color: #ff5900;
+    letter-spacing: 2px;
+    text-align: center;
+    line-height: 1;
+}
+
+.subtitulo-form {
+    text-align: center;
+    color: rgba(255, 255, 255, 0.58);
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    margin-top: -6px;
+    margin-bottom: 6px;
+}
+
+.campo {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.campo label {
+    font-size: 13px;
+    color: rgba(255, 255, 255, 0.65);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    font-family: Arial, sans-serif;
+}
+
+.formulario input {
+    width: 100%;
+    padding: 15px 16px;
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    background: rgba(255, 255, 255, 0.04);
+    color: #fff;
+    outline: none;
+    transition: 0.25s ease;
+    font-size: 15px;
+    font-family: Arial, sans-serif;
+}
+
+.formulario input::placeholder {
+    color: rgba(255, 255, 255, 0.3);
+}
+
+.formulario input:focus {
+    border-color: rgba(255, 89, 0, 0.8);
+    background: rgba(255, 89, 0, 0.06);
+    box-shadow: 0 0 0 4px rgba(255, 89, 0, 0.08);
+}
+
+.btn-acessar {
+    width: 100%;
+    padding: 16px;
+    margin-top: 6px;
+    border: none;
+    border-radius: 10px;
+    background: linear-gradient(180deg, #ff6a00 0%, #e64a00 100%);
+    color: white;
+    font-size: 24px;
+    letter-spacing: 2px;
+    cursor: pointer;
+    transition: 0.25s ease;
+    font-family: "Bebas Neue", sans-serif;
+}
+
+.btn-acessar:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 0 24px rgba(255, 89, 0, 0.35);
+}
+
+.btn-acessar:disabled {
+    opacity: 0.65;
+    cursor: not-allowed;
+}
+
+.btn-criarConta {
+    background: transparent;
+    border: none;
+    color: rgba(255, 255, 255, 0.58);
+    cursor: pointer;
+    font-size: 14px;
+    font-family: Arial, sans-serif;
+    text-align: center;
+    transition: 0.25s ease;
+}
+
+.btn-criarConta:hover {
+    color: #ff5900;
+}
+
+.erro {
+    color: #ff6b6b;
+    font-size: 14px;
+    text-align: center;
+    font-family: Arial, sans-serif;
+}
+
+@media (max-width: 520px) {
+    .formulario {
+        max-width: 92%;
+        padding: 34px 22px;
+    }
+
+    .titulo-form {
+        font-size: 2.5rem;
+    }
+}
