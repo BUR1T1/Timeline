@@ -43,7 +43,7 @@ function FormularioLogin() {
             const token = await response.text();
             localStorage.setItem("token", token);
 
-            navigate("/timeline/criar");
+            navigate("/minha-timeline");
         } catch (err: any) {
             setErro(err.message || "Erro ao fazer login.");
         } finally {
