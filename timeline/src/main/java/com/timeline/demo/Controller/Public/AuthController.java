@@ -1,4 +1,4 @@
-package com.timeline.demo.Controller;
+package com.timeline.demo.Controller.Public;
 
 import com.timeline.demo.Dto.UsuarioDTO.UsuarioDto;
 import com.timeline.demo.Dto.UsuarioDTO.UsuarioResponseDto;
@@ -51,6 +51,6 @@ public class AuthController {
         userRes.setNome(usuarioDto.getNome());
         userRes.setEmail(usuarioDto.getEmail());
 
-        return ResponseEntity.ok( "criado com sucesso!!" + userRes);
+        return ResponseEntity.ok( "criado com sucesso!!");
     }
 }

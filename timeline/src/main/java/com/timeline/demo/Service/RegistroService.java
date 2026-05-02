@@ -50,8 +50,6 @@ public class RegistroService {
         }
     }
 
-
-
     public void usuarioDono(Usuario user, TimeLine line){
         if (!line.getUsuario().getId().equals(user.getId())) {
             throw new RuntimeException("Acesso negado");
@@ -66,7 +64,6 @@ public class RegistroService {
         }
         return registro;
     }
-
 
     public RegistroResponseDTO criaregistro(RegistroDto dto) {
 
@@ -98,6 +95,7 @@ public class RegistroService {
         registro.setDataInicio(dto.getDataInicio());
         registro.setDataFim(dto.getDataFim());
         registro.setImagemUrl(dto.getImagemUrl());
+
         return toResponseDTO(registroRepository.save(registro));
     }
 
@@ -153,10 +151,32 @@ public class RegistroService {
                 .toList();
     }
 
+    public List<Registro> getAllRegistros(){
+        Usuario usuario = usuarioService.getUsuarioLogado();
+        TimeLine timeLine = usuario.getTimeLine();
+
+        if (timeLine.getRegistros() == null){
+            return List.of();
+        }
+        return timeLine.getRegistros()
+                .stream()
+                .toList();
+    }
+
+    public RegistroResponseDTO buscarPorId(UUID registroId){
+        Usuario usuario = usuarioService.getUsuarioLogado();
+
+        Registro res = registroRepository.findByid(registroId)
+                .orElseThrow(() -> new RuntimeException("Registro não emcontrado"));
+
+        return toResponseDTO(res);
+    }
+
+
+
     //=======================================================================
     //ROTAS PUBLICAS
     //=======================================================================
-
 
     public List<Registro> listarRegistrosPublicos(UUID usuarioId){
         Usuario usuario = usuarioRepository.findById(usuarioId).orElseThrow(() -> new RuntimeException("Usuario não encontrado"));

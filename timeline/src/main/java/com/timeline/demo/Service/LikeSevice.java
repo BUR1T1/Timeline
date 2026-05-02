@@ -1,6 +1,5 @@
 package com.timeline.demo.Service;
 
-import com.timeline.demo.Dto.RegistrosDTO.comentsDTO.likeDto.LikeDto;
 import com.timeline.demo.Repository.*;
 import com.timeline.demo.model.Registro.Coments.Coments;
 import com.timeline.demo.model.Registro.Coments.DesLike;
@@ -41,24 +40,20 @@ public class LikeSevice {
         return null;
     }
 
-    private Like criarLike(LikeDto likeDto){
-        Usuario usuario = usuarioService.getUsuarioLogado();
+    public Like criarLike(Usuario usuario, Coments coments){
         Like newLike = new Like();
         newLike.setUsuario(usuario);
-        newLike.setTxt(likeDto.getTxt());
-        return likeRepository.save(newLike);
+        newLike.setComents(coments);
+        return newLike;
     }
 
-
-    public void darLike(UUID comentarioId) {
+    public Like darLike(UUID comentarioId) {
         Usuario usuario = usuarioService.getUsuarioLogado();
         Coments coments = comentsRepository.findById(comentarioId).orElseThrow(() -> new RuntimeException("Comentário não encontrado"));
 
-        Optional<Like> likes = likeRepository.existsByUsuarioAndComents(usuario, coments);
         for (Like likesexist : coments.getLikes()) {
             if (likesexist.getUsuario().getId().equals(usuario.getId()) && !likesexist.isDeletado()) {
-                System.out.println("Usuario já curtiu essa publicação");
-                return;
+               throw  new RuntimeException("Usuario já curtiu essa publicação");
             }
         }
 
@@ -69,9 +64,31 @@ public class LikeSevice {
             }
         }
 
-        Like like = criarLike()
+        Like like = criarLike(usuario,coments);
+        return likeRepository.save(like);
+    }
 
-        likeRepository.save(like);
+    public  List<Like> listarMyLikes(){
+        Usuario usuario = usuarioService.getUsuarioLogado();
+
+        return likeRepository.listarMeusLiks(usuario.getId())
+                .stream()
+                .filter(l -> !l.isDeletado())
+                .toList();
+    }
+
+    public void removerLike(UUID comentarioId){
+        Usuario usuario = usuarioService.getUsuarioLogado();
+        Coments coments = comentsRepository.findById(comentarioId).orElseThrow(() -> new RuntimeException("Comentario não existe"));
+
+        for (Like likesexist : coments.getLikes()) {
+            if (likesexist.getUsuario().getId().equals(usuario.getId()) && !likesexist.isDeletado()) {
+                likeRepository.delete(likesexist);
+                System.out.println("deletado");
+                return;
+            }
+        }
+        throw new RuntimeException("Não existe like para remover");
     }
 
 

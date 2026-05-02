@@ -3,7 +3,6 @@ package com.timeline.demo.Service;
 import com.timeline.demo.Dto.RegistrosDTO.comentsDTO.ComentsDto;
 import com.timeline.demo.Repository.ComentsRepository;
 import com.timeline.demo.Repository.TimeLineRepository;
-import com.timeline.demo.Repository.UsuarioRepository;
 import com.timeline.demo.model.Registro.Coments.Coments;
 import com.timeline.demo.model.TimeLine;
 import com.timeline.demo.model.Usuario;
@@ -18,9 +17,6 @@ public class ComentsService {
 
     @Autowired
     ComentsRepository comentsRepository;
-
-    @Autowired
-    UsuarioRepository usuarioRepository;
 
     @Autowired
     TimeLineRepository timeLineRepository;
@@ -42,7 +38,6 @@ public class ComentsService {
         return comentsRepository.save(comentsDtoNew);
     }
 
-    // Falta listar comentários por timeline.
     public List<Coments> listarComents(UUID timlineId){
 
         TimeLine timeLine = timeLineRepository.findById(timlineId).orElseThrow(() -> new RuntimeException("timeline não encontrada"));
@@ -57,7 +52,6 @@ public class ComentsService {
                 .toList();
     }
 
-    //Falta deletar comentário, se isso entrar na v1.
     public Coments inativarComentario(UUID timeLineId, UUID comentsId){
         Usuario usuario = usuarioService.getUsuarioLogado();
         TimeLine timeLine = timeLineRepository.findById(timeLineId).orElseThrow(() -> new RuntimeException("timeline não encontrada"));

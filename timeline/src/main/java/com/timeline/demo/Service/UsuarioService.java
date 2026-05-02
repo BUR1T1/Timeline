@@ -1,7 +1,7 @@
 package com.timeline.demo.Service;
 
-import com.timeline.demo.Dto.TimelineDto;
 import com.timeline.demo.Dto.UsuarioDTO.UsuarioDto;
+import com.timeline.demo.Dto.UsuarioDTO.UsuarioResponseDto;
 import com.timeline.demo.Repository.TimeLineRepository;
 import com.timeline.demo.Repository.UsuarioRepository;
 import com.timeline.demo.model.TimeLine;
@@ -20,18 +20,18 @@ public class UsuarioService {
     UsuarioRepository usuarioRepository;
 
     @Autowired
-    private PasswordConfig passwordConfig;
-
-    @Autowired
     TimeLineRepository timeLineRepository;
 
     @Autowired
     TimeLineService timeLineService;
 
     @Autowired
+    private PasswordConfig passwordConfig;
+
+    @Autowired
     private JwtUtil jwtUtil;
 
-    public void criarUsuario(UsuarioDto usuarioDto) {
+    public UsuarioResponseDto criarUsuario(UsuarioDto usuarioDto) {
         Usuario usuario = new Usuario();
 
         usuario.setNome(usuarioDto.getNome());
@@ -45,6 +45,17 @@ public class UsuarioService {
 
         timeLineRepository.save(newtime);
         usuarioRepository.save(usuario);
+
+        return toReesponseDto(usuario);
+    }
+
+    private UsuarioResponseDto toReesponseDto(Usuario usuario){
+        UsuarioResponseDto dtoNewRes = new UsuarioResponseDto();
+
+        usuario.setNome(dtoNewRes.getNome());
+        usuario.setEmail(dtoNewRes.getEmail());
+
+        return dtoNewRes;
     }
 
     public Usuario getUsuarioLogado() {

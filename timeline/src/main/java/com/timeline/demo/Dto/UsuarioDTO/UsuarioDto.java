@@ -1,11 +1,16 @@
 package com.timeline.demo.Dto.UsuarioDTO;
 
+import com.timeline.demo.model.TimeLine;
+import jakarta.persistence.Column;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToOne;
+
 public class UsuarioDto {
 
     private String nome;
     private String email;
-    private String Cpf;
     private String senha;
+    private TimeLine timeLine;
 
     public String getNome() {
         return nome;
@@ -31,11 +36,4 @@ public class UsuarioDto {
         this.senha = senha;
     }
 
-    public String getCpf() {
-        return Cpf;
-    }
-
-    public void setCpf(String cpf) {
-        Cpf = cpf;
-    }
 }
