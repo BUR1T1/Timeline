@@ -97,6 +97,21 @@ const Metricas: React.FC = () => {
         return ((likes / total) * 100).toFixed(1);
     };
 
+    const calcularProgresso = (registro: Registro) => {
+        const maxEngajamento = Math.max(
+            ...registros.map((r) =>
+                calcularEngajamento(r.likes, r.dislikes, r.comentarios)
+            ),
+            1
+        );
+        const engajamento = calcularEngajamento(
+            registro.likes,
+            registro.dislikes,
+            registro.comentarios
+        );
+        return Math.min((engajamento / maxEngajamento) * 100, 100);
+    };
+
     return (
         <div className="metricas-page">
             <header className="metricas-header">
@@ -209,23 +224,8 @@ const Metricas: React.FC = () => {
                                                         <div
                                                             className="barra-preenchida"
                                                             style={{
-                                                                width: `${Math.min(
-                                                                    (calcularEngajamento(
-                                                                        registro.likes,
-                                                                        registro.dislikes,
-                                                                        registro.comentarios
-                                                                    ) /
-                                                                        Math.max(
-                                                                            ...registros.map(
-                                                                                (r) =>
-                                                                                    calcularEngajamento(
-                                                                                        r.likes,
-                                                                                        r.dislikes,
-                                                                                        r.comentarios
-                                                                                    )
-                                                            )) *
-                                                                        100,
-                                                                    100
+                                                                width: `${calcularProgresso(
+                                                                    registro
                                                                 )}%`
                                                             }}
                                                         />

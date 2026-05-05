@@ -1,0 +1,104 @@
+BUILD / REBUILD / USO DO PROJETO Timeline
+
+1. VISÃO GERAL
+- O projeto consiste em três serviços via Docker Compose:
+  * db      -> PostgreSQL
+  * backend -> Spring Boot Java (porta 8080)
+  * frontend-> app React/Vite servido pelo Nginx (porta 3000)
+
+2. PARA BUILDAR O PROJETO PELA PRIMEIRA VEZ
+1) Abra um terminal no diretório raiz do projeto:
+   c:\Users\otavio.ribeiro\Documents\Facudade\Timeline
+
+2) Execute:
+   docker compose build
+
+3) Depois, suba os containers:
+   docker compose up -d
+
+4) Verifique se está rodando:
+   docker compose ps
+
+5) Acesse:
+   Backend: http://localhost:8080
+   Frontend: http://localhost:3000
+
+3. REBUILD APÓS ALTERAÇÕES NO CÓDIGO
+Sempre que fizer alterações no código do backend ou do frontend, siga estes passos:
+
+A) Se a alteração for no backend Java:
+   1) Entre no diretório do backend:
+      cd timeline
+   2) Gere o JAR novamente:
+      .\mvnw clean package
+   3) Volte para o diretório raiz:
+      cd ..
+   4) Rebuild do serviço backend:
+      docker compose build backend
+   5) Reinicie apenas o backend:
+      docker compose up -d backend
+
+B) Se a alteração for no frontend:
+   1) Entre no diretório do frontend:
+      cd Front-end\timeline
+   2) Instale dependências (se necessário):
+      npm install
+   3) Gere a versão final do site:
+      npm run build
+   4) Volte para o diretório raiz:
+      cd ..\..
+   5) Rebuild do serviço frontend:
+      docker compose build frontend
+   6) Reinicie apenas o frontend:
+      docker compose up -d frontend
+
+C) Se as alterações forem em ambos os serviços, você pode rebuildar ambos:
+   docker compose build backend frontend
+   docker compose up -d backend frontend
+
+4. GARANTINDO O USO CORRETO DO PROJETO
+- Antes de rebuildar, pare containers antigos para evitar conflito:
+  docker compose down
+- Se quiser limpar imagens e volumes criados pelo Compose:
+  docker compose down --rmi local --volumes
+- Sempre confirme as portas usadas no `docker-compose.yml`:
+  * db: 5432
+  * backend: 8080
+  * frontend: 3000
+- Se houver conflito de porta, pare o serviço que está usando a mesma porta ou altere a porta no `docker-compose.yml`.
+
+5. SOLUÇÃO DE CONFLITOS ENTRE CONTAINERS DO DOCKER
+- Conflitos comuns:
+  * porta já em uso (5432, 8080 ou 3000)
+  * container antigo ainda em execução
+  * imagem desatualizada sendo usada
+
+- Comandos úteis para diagnóstico:
+  docker compose ps
+  docker ps
+  docker compose logs backend
+  docker compose logs frontend
+
+- Para evitar conflito de container antigo:
+  docker compose down
+  docker compose up -d
+
+- Se precisar reiniciar tudo do zero:
+  docker compose down --rmi all --volumes
+  docker compose up -d --build
+
+6. DICAS IMPORTANTES
+- No backend Java, sempre rode `mvnw clean package` antes do build Docker se o JAR mudou.
+- No frontend, faça `npm install` depois de alterar `package.json` e `npm run build` para atualizar o `dist`.
+- Use `docker compose up -d --build` quando quiser forçar rebuild completo de todos os serviços.
+- Mantenha o `docker-compose.yml` atualizado com os caminhos corretos para `build: ./timeline` e `build: ./Front-end/timeline`.
+
+7. EXEMPLO DE FLUXO RÁPIDO
+1) Parar containers antigos:
+   docker compose down
+2) Rebuild completo:
+   docker compose up -d --build
+3) Verificar estado:
+   docker compose ps
+
+Pronto! Com esses passos você consegue buildar, rebuildar após alterações e evitar conflitos entre os containers Docker do seu projeto Timeline.
