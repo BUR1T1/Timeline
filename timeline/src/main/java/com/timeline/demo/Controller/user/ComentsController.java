@@ -18,25 +18,25 @@ public class ComentsController {
     @Autowired
     ComentsService comentsService;
 
-    @PostMapping("/criar-comentario")
-    public ResponseEntity criarComentario(@RequestBody ComentsDto comentsDto, @PathVariable UUID timeLineId){
-        Coments coments = comentsService.criarComntario( comentsDto, timeLineId);
+    @PostMapping("/criar-comentario/{timelineId}")
+    public ResponseEntity criarComentario(@RequestBody ComentsDto comentsDto, @PathVariable UUID timelineId){
+        Coments coments = comentsService.criarComntario(comentsDto, timelineId);
         return ResponseEntity.status(HttpStatus.CREATED).body(coments);
     }
 
-    @GetMapping("/listar-comentario")
+    @GetMapping("/listar-comentario/{timelineId}")
     public ResponseEntity<List<Coments>> listarCómentario(@PathVariable UUID timelineId){
         List<Coments> listRes = comentsService.listarComents(timelineId);
         return ResponseEntity.status(HttpStatus.OK).body(listRes);
     }
 
-    @PutMapping("/inativar-comentario")
-    public ResponseEntity inativarcomentario(@PathVariable UUID timeLineId, @PathVariable UUID comentsId){
-        comentsService.inativarComentario(timeLineId,comentsId);
+    @PutMapping("/inativar-comentario/{timelineId}/{comentsId}")
+    public ResponseEntity inativarcomentario(@PathVariable UUID timelineId, @PathVariable UUID comentsId){
+        comentsService.inativarComentario(timelineId,comentsId);
         return ResponseEntity.status(HttpStatus.OK).body("Comentario inativado com sucesso!");
     }
 
-    @DeleteMapping("/deletar-coments")
+    @DeleteMapping("/deletar-coments/{timelineId}/{comentarioId}")
     public ResponseEntity deletarComentario(@PathVariable UUID timelineId,@PathVariable UUID comentarioId){
         comentsService.deletarPermanent(timelineId, comentarioId);
         return ResponseEntity.status(HttpStatus.OK).body("Comentario Deletado permanentmente");

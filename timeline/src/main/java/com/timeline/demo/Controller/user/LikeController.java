@@ -18,7 +18,7 @@ public class LikeController {
     @Autowired
     LikeSevice likeSevice;
 
-    @PostMapping("/darlike")
+    @PostMapping("/darlike/{comentarioId}")
     public ResponseEntity darlikes(@PathVariable UUID comentarioId){
         Like like = likeSevice.darLike(comentarioId);
         return ResponseEntity.status(HttpStatus.CREATED).body(like);
@@ -30,14 +30,13 @@ public class LikeController {
         return ResponseEntity.status(HttpStatus.OK).body(listLikes);
     }
 
-    @GetMapping("/buscar-likes")
+    @GetMapping("/buscar-likes/{comentarioId}/{usuarioId}")
     public ResponseEntity buscarlike(@PathVariable UUID comentarioId, @PathVariable UUID usuarioId){
         Like like = likeSevice.buscarLike(comentarioId, usuarioId);
         return ResponseEntity.status(HttpStatus.OK).body(like);
     }
 
-    @GetMapping
-    @DeleteMapping("/deletar")
+    @DeleteMapping("/deletar/{comentarioId}")
     public void deletarLike(@PathVariable UUID comentarioId){
          likeSevice.removerLike(comentarioId);
     }

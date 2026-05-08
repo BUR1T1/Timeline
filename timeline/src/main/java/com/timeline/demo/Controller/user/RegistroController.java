@@ -33,7 +33,7 @@ public class RegistroController {
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
-    @PutMapping("/{registroId}")
+    @PutMapping("/{registroId}/{timelineId}")
     public ResponseEntity<Void> moverParaLixeira(@PathVariable UUID registroId, @PathVariable UUID timelineId) {
         service.moverParaLixeira(registroId,timelineId);
         return ResponseEntity.noContent().build();
@@ -60,12 +60,12 @@ public class RegistroController {
         return service.getAllRegistros();
     }
 
-    @GetMapping("/busdcarPorId")
+    @GetMapping("/busdcarPorId/{registroId}")
     public RegistroResponseDTO buscarPorId(@PathVariable UUID registroId){
         return service.buscarPorId(registroId);
     }
 
-    @DeleteMapping("/esvaziar-lixeira/{id}/{}")
+    @DeleteMapping("/esvaziar-lixeira/{registroId}/{timelineId}")
     public ResponseEntity esvaziarlixeira(@PathVariable UUID registroId, @PathVariable UUID timelineId){
         service.deletarPermanentemente(registroId, timelineId);
         return ResponseEntity.status(HttpStatus.OK).body("deletado com sucesso" + registroId);

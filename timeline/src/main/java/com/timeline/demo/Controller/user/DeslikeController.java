@@ -2,7 +2,6 @@ package com.timeline.demo.Controller.user;
 
 
 import com.timeline.demo.Service.DesLikeService;
-import com.timeline.demo.Service.LikeSevice;
 import com.timeline.demo.model.Registro.Coments.DesLike;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -19,13 +18,13 @@ public class DeslikeController {
     @Autowired
     DesLikeService desLikeService;
 
-    @PostMapping("/dar-DesLike")
+    @PostMapping("/dar-DesLike/{comentarioId}")
     public ResponseEntity darDesLike(@PathVariable UUID comentarioId){
         desLikeService.darDeslike(comentarioId);
         return ResponseEntity.status(HttpStatus.CREATED).body("Deu like");
     }
 
-    @PutMapping("/remover-DesLike")
+    @PutMapping("/remover-DesLike/{comentarioId}")
     public ResponseEntity removerDeslike(@PathVariable UUID comentarioId){
         desLikeService.removerDeslike(comentarioId);
 
