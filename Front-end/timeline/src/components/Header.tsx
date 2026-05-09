@@ -35,14 +35,11 @@ const Header: React.FC = () => {
                         </>
                     ) : (
                         <>
-                            <button className="nav-button" onClick={() => navigate('/')}>
-                                Home
-                            </button>
                             <button className="nav-button" onClick={() => navigate('/login')}>
-                                Login
+                                Entrar
                             </button>
                             <button className="nav-button" onClick={() => navigate('/cadastro')}>
-                                Cadastro
+                                Cadastrar
                             </button>
                         </>
                     )}

@@ -41,7 +41,7 @@ const Dashboard: React.FC = () => {
     useEffect(() => {
         const token = localStorage.getItem("token");
         if (!token) {
-            navigate("/login");
+            navigate("/");
             return;
         }
 
@@ -187,6 +187,30 @@ const Dashboard: React.FC = () => {
                         Ver Métricas Detalhadas
                     </button>
                 </section>
+
+                {usuario && (
+                    <section className="dashboard-share">
+                        <h2>Compartilhar Timeline</h2>
+                        <p>Compartilhe o link da sua timeline profissional:</p>
+                        <div className="share-link">
+                            <input
+                                type="text"
+                                value={`${window.location.origin}/public/usuarios/${usuario.id}/timeline`}
+                                readOnly
+                                className="link-input"
+                            />
+                            <button
+                                className="btn-copy"
+                                onClick={() => {
+                                    navigator.clipboard.writeText(`${window.location.origin}/public/usuarios/${usuario.id}/timeline`);
+                                    alert('Link copiado!');
+                                }}
+                            >
+                                Copiar Link
+                            </button>
+                        </div>
+                    </section>
+                )}
 
                 {loading && <p className="estado-info">Carregando dados...</p>}
                 {erro && !loading && (

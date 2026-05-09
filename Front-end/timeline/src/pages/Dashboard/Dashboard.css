@@ -138,6 +138,57 @@
     color: #667eea;
 }
 
+.dashboard-share {
+    background: rgba(255, 102, 0, 0.1);
+    padding: 2rem;
+    border-radius: 12px;
+    margin: 2rem 0;
+    text-align: center;
+    border: 1px solid rgba(255, 102, 0, 0.3);
+}
+
+.dashboard-share h2 {
+    color: #ff6600;
+    margin-bottom: 1rem;
+}
+
+.dashboard-share p {
+    color: #cccccc;
+    margin-bottom: 1rem;
+}
+
+.share-link {
+    display: flex;
+    gap: 1rem;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.link-input {
+    flex: 1;
+    padding: 0.75rem;
+    border: 2px solid #ff6600;
+    border-radius: 8px;
+    background: rgba(0, 0, 0, 0.5);
+    color: #ffffff;
+    font-size: 0.9rem;
+}
+
+.btn-copy {
+    background: #ff6600;
+    color: #000000;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: all 0.3s ease;
+}
+
+.btn-copy:hover {
+    background: #e55a00;
+}
+
 .estado-info,
 .estado-erro {
     text-align: center;

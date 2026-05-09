@@ -31,7 +31,7 @@ const EditarRegistro: React.FC = () => {
     useEffect(() => {
         const token = localStorage.getItem("token");
         if (!token) {
-            navigate("/login");
+            navigate("/");
             return;
         }
 
