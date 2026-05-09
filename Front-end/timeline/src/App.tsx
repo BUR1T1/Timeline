@@ -1,4 +1,5 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Landing from "./pages/Landing/Landing";
 import FormularioLogin from "./pages/FormularioLogin/FromularioLogin";
 import FormularioCadastro from "./pages/FormularioCadastro/FormularioCadastro";
 import FormularioTempo from "./pages/FormularioTempo/Formulario";
@@ -11,7 +12,8 @@ function App() {
     return (
         <BrowserRouter>
             <Routes>
-                <Route path="/" element={<FormularioLogin />} />
+                <Route path="/" element={<Landing />} />
+                <Route path="/login" element={<FormularioLogin />} />
                 <Route path="/cadastro" element={<FormularioCadastro />} />
                 <Route path="/minha-timeline" element={<Dashboard />} />
                 <Route path="/timeline/criar" element={<FormularioTempo />} />

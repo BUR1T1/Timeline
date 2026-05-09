@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import Header from "../../components/Header";
 import "./Metricas.css";
 
 type Registro = {
@@ -29,7 +30,7 @@ const Metricas: React.FC = () => {
     useEffect(() => {
         const token = localStorage.getItem("token");
         if (!token) {
-            navigate("/");
+            navigate("/login");
             return;
         }
 
@@ -114,17 +115,12 @@ const Metricas: React.FC = () => {
 
     return (
         <div className="metricas-page">
+            <Header />
             <header className="metricas-header">
                 <div className="metricas-header-content">
                     <h1>Métricas e Estatísticas</h1>
                     <p>Acompanhe o desempenho da sua timeline</p>
                 </div>
-                <button
-                    className="btn-voltar-metricas"
-                    onClick={() => navigate("/minha-timeline")}
-                >
-                    ← Voltar ao Dashboard
-                </button>
             </header>
 
             <main className="metricas-container">

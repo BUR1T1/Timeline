@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import Header from "../../components/Header";
 import "./LinhaTempo.css";
 
 type Registro = {
@@ -60,6 +61,7 @@ const LinhaTempo: React.FC = () => {
 
     return (
         <div className="linha-tempo-page">
+            <Header />
             <header className="linha-tempo-header">
                 <div className="linha-tempo-header-content">
                     <p className="linha-tempo-tag">Timeline pública</p>

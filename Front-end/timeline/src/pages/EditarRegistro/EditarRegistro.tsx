@@ -1,5 +1,6 @@
 import React, { useState, useEffect, type ChangeEvent, type FormEvent } from "react";
 import { useParams, useNavigate } from "react-router-dom";
+import Header from "../../components/Header";
 import "./EditarRegistro.css";
 
 type FormData = {
@@ -30,7 +31,7 @@ const EditarRegistro: React.FC = () => {
     useEffect(() => {
         const token = localStorage.getItem("token");
         if (!token) {
-            navigate("/");
+            navigate("/login");
             return;
         }
 
@@ -126,6 +127,7 @@ const EditarRegistro: React.FC = () => {
     if (loading) {
         return (
             <div className="editar-registro-page">
+                <Header />
                 <p className="estado-info">Carregando registro...</p>
             </div>
         );
@@ -133,6 +135,7 @@ const EditarRegistro: React.FC = () => {
 
     return (
         <div className="editar-registro-page">
+            <Header />
             <header className="editar-header">
                 <div className="editar-header-content">
                     <h1>Editar Registro</h1>

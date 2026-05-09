@@ -1,4 +1,5 @@
 import React, { useState, type ChangeEvent, type FormEvent } from "react";
+import Header from "../../components/Header";
 import "./Formulario.css";
 
 type Etapa = {
@@ -68,6 +69,7 @@ const Formulario: React.FC = () => {
 
     return (
         <div className="timeline-page">
+            <Header />
             <aside className="timeline-form-panel">
                 <div className="panel-content">
                     <h1 className="titulo-formulario">Criar Timeline</h1>

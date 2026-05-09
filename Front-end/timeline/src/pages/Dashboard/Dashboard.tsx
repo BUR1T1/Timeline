@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import Header from "../../components/Header";
 import "./Dashboard.css";
 
 type Registro = {
@@ -40,7 +41,7 @@ const Dashboard: React.FC = () => {
     useEffect(() => {
         const token = localStorage.getItem("token");
         if (!token) {
-            navigate("/");
+            navigate("/login");
             return;
         }
 
@@ -134,6 +135,7 @@ const Dashboard: React.FC = () => {
 
     return (
         <div className="dashboard-page">
+            <Header />
             <header className="dashboard-header">
                 <div className="dashboard-header-content">
                     <div className="dashboard-user-info">
