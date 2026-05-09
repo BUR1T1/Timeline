@@ -10,6 +10,9 @@
     padding: 2rem;
     backdrop-filter: blur(10px);
     text-align: center;
+    position: sticky;
+    top: 80px; /* below the main header */
+    z-index: 10;
 }
 
 .editar-header-content h1 {

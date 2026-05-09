@@ -60,7 +60,7 @@ const FormularioCadastro: React.FC = () => {
                 throw new Error("Não foi possível criar a conta.");
             }
 
-            window.location.href = "/";
+            window.location.href = "/login";
         } catch (err: any) {
             setErro(err.message || "Erro ao cadastrar.");
         } finally {

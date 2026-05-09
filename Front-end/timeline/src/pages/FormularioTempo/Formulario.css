@@ -169,6 +169,28 @@ body {
     font-size: 15px;
 }
 
+.save-section {
+    margin-top: 2rem;
+    text-align: center;
+}
+
+.btn-salvar {
+    background: #ff5900;
+    color: #000000;
+    border: none;
+    padding: 1rem 2rem;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn-salvar:hover {
+    background: #e55a00;
+    transform: translateY(-2px);
+}
+
 .timeline-lista {
     display: flex;
     flex-direction: column;

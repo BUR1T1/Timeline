@@ -1,4 +1,5 @@
 import React, { useState, type ChangeEvent, type FormEvent } from "react";
+import { useNavigate } from "react-router-dom";
 import Header from "../../components/Header";
 import "./Formulario.css";
 
@@ -20,6 +21,7 @@ type FormData = {
 };
 
 const Formulario: React.FC = () => {
+    const navigate = useNavigate();
     const [formData, setFormData] = useState<FormData>({
         titulo: "",
         descricao: "",
@@ -65,6 +67,43 @@ const Formulario: React.FC = () => {
 
     const removerEtapa = (id: number) => {
         setEtapas((prev) => prev.filter((etapa) => etapa.id !== id));
+    };
+
+    const salvarTimeline = async () => {
+        const token = localStorage.getItem("token");
+        if (!token) {
+            alert("Você precisa estar logado para salvar.");
+            return;
+        }
+
+        try {
+            for (const etapa of etapas) {
+                const response = await fetch("http://localhost:8080/me/registros", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        Authorization: `Bearer ${token}`
+                    },
+                    body: JSON.stringify({
+                        titulo: etapa.titulo,
+                        descricao: etapa.descricao,
+                        dataInicio: etapa.dataInicio,
+                        dataFim: etapa.dataFim,
+                        imagemUrl: etapa.imagemUrl
+                    })
+                });
+
+                if (!response.ok) {
+                    throw new Error("Erro ao salvar registro");
+                }
+            }
+
+            alert("Timeline salva com sucesso!");
+            navigate("/minha-timeline");
+        } catch (error) {
+            console.error("Erro ao salvar timeline:", error);
+            alert("Erro ao salvar timeline. Tente novamente.");
+        }
     };
 
     return (
@@ -205,6 +244,14 @@ const Formulario: React.FC = () => {
                                 </div>
                             </div>
                         ))}
+                    </div>
+                )}
+
+                {etapas.length > 0 && (
+                    <div className="save-section">
+                        <button className="btn-salvar" onClick={salvarTimeline}>
+                            Salvar Timeline
+                        </button>
                     </div>
                 )}
             </main>
