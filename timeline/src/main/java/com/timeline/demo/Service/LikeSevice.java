@@ -53,7 +53,7 @@ public class LikeSevice {
 
         for (Like likesexist : coments.getLikes()) {
             if (likesexist.getUsuario().getId().equals(usuario.getId()) && !likesexist.isDeletado()) {
-               throw  new RuntimeException("Usuario já curtiu essa publicação");
+            throw  new RuntimeException("Usuario já curtiu essa publicação");
             }
         }
 
@@ -71,7 +71,7 @@ public class LikeSevice {
     public  List<Like> listarMyLikes(){
         Usuario usuario = usuarioService.getUsuarioLogado();
 
-        return likeRepository.listarMeusLiks(usuario.getId())
+        return likeRepository.findByUsuario_Id(usuario.getId())
                 .stream()
                 .filter(l -> !l.isDeletado())
                 .toList();

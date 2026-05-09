@@ -1,7 +1,6 @@
 package com.timeline.demo.Controller.user;
 
 import com.timeline.demo.Service.LikeSevice;
-import com.timeline.demo.model.Registro.Coments.Coments;
 import com.timeline.demo.model.Registro.Coments.Like;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

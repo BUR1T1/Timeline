@@ -13,10 +13,10 @@ public class Coments extends EntityBase {
 
     private String comentario ;
 
-    @ManyToOne
+    @OneToMany(mappedBy = "coments")
     private List<Like> likes;
 
-    @ManyToOne
+    @OneToMany(mappedBy = "coments")
     private List<DesLike> desLike;
 
     @ManyToOne

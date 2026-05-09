@@ -65,13 +65,13 @@ public class DesLikeService {
                 return desLike;
             }
         }
-         throw  new RuntimeException("Deslikes não encontrados");
+        throw  new RuntimeException("Deslikes não encontrados");
     }
 
     public List<DesLike> listarMyDeslikes(){
         Usuario usuario = usuarioService.getUsuarioLogado();
 
-        return deslikeRepository.findBydeslikeUser(usuario.getId())
+        return deslikeRepository.findByUsuario_Id(usuario.getId())
                 .stream()
                 .filter(d -> !d.isDeletado())
                 .toList();

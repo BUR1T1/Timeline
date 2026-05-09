@@ -4,18 +4,20 @@ import com.timeline.demo.model.EntityBase;
 import com.timeline.demo.model.Usuario;
 import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 
 @Entity
+@Table(name = "deslikes")
 public class DesLike extends EntityBase {
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "USUARIO_ID")
     private Usuario usuario;
 
     private String txt = "Não gostei";
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "COMENTARIO_ID")
     private Coments coments;
 

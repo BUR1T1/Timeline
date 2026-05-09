@@ -17,9 +17,6 @@ public class TimeLineService {
     @Autowired
     UsuarioRepository usuarioRepository;
 
-    @Autowired
-    UsuarioService usuarioService;
-
 
     public TimeLine criarTimeline(Usuario usuario){
         TimeLine newtimeline = new TimeLine();
@@ -28,12 +25,6 @@ public class TimeLineService {
         return timeLineRepository.save(newtimeline);
     }
 
-    public TimeLine chamarMinhaTimeline() {
-        Usuario usuario = usuarioService.getUsuarioLogado();
-
-        return timeLineRepository.findByUsuario(usuario)
-                .orElseThrow(() -> new RuntimeException("Timeline não encontrada"));
-    }
 
     //=======================================================================
     //ROTAS PUBLICAS

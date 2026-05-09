@@ -10,15 +10,13 @@ import java.util.List;
 public class TimeLine extends EntityBase {
 
     @OneToOne
-    @JoinColumn(name = "Usuario_id")
+    @JoinColumn(name = "usuario_id")
     private Usuario usuario;
 
-    @OneToMany
-    @Column(name = "REGISTRO_TIME")
+    @OneToMany(mappedBy = "timeLine")
     private List<Registro> registros;
 
-    @OneToMany
-    @Column(name = "Coments")
+    @OneToMany(mappedBy = "timeLine")
     private List<Coments> coments;
 
     public Usuario getUsuario() {

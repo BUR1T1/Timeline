@@ -1,9 +1,6 @@
 package com.timeline.demo.Dto.UsuarioDTO;
 
 import com.timeline.demo.model.TimeLine;
-import jakarta.persistence.Column;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToOne;
 
 public class UsuarioDto {
 

@@ -1,7 +1,6 @@
 package com.timeline.demo.Controller.Public;
 import com.timeline.demo.Service.RegistroService;
 import com.timeline.demo.model.Registro.Registro;
-import com.timeline.demo.model.TimeLine;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

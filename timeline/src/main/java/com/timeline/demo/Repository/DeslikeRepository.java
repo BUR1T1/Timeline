@@ -9,7 +9,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 public interface DeslikeRepository extends BaseRepository<DesLike>{
-    Optional<DesLike> existsByUsuarioAndComents(Usuario usuario, Coments coments);
+    Optional<DesLike> findByUsuarioAndComents(Usuario usuario, Coments coments);
 
-    List<DesLike> findBydeslikeUser(UUID usuarioId);
+    List<DesLike> findByUsuario_Id(UUID usuarioId);
 }

@@ -1,9 +1,5 @@
 package com.timeline.demo.Dto.UsuarioDTO;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.timeline.demo.model.TimeLine;
-
-import java.util.UUID;
 
 public class UsuarioResponseDto {
 

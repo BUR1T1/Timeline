@@ -28,9 +28,6 @@ public class UsuarioService {
     @Autowired
     private PasswordConfig passwordConfig;
 
-    @Autowired
-    private JwtUtil jwtUtil;
-
     public UsuarioResponseDto criarUsuario(UsuarioDto usuarioDto) {
         Usuario usuario = new Usuario();
 

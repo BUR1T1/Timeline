@@ -12,12 +12,6 @@ public interface TimeLineRepository extends BaseRepository<TimeLine> {
         return Optional.empty();
     }
 
-    default Optional<TimeLine> findByUsuario(Usuario usuario){
-        return Optional.empty();
-    }
-
-
-
-
+    Optional<TimeLine> findByUsuario(Usuario usuario);
 
 }

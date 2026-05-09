@@ -2,7 +2,6 @@ package com.timeline.demo.model;
 
 import jakarta.persistence.*;
 
-import java.sql.Time;
 
 @Entity
 @Table(name = "usuario")
@@ -17,8 +16,7 @@ public class Usuario extends EntityBase {
     @Column(nullable = false)
     private String senha;
 
-    @OneToOne
-    @JoinColumn(name = "TimeLineUser_id")
+    @OneToOne(mappedBy = "usuario")
     private TimeLine timeLine;
 
     public TimeLine getTimeLine() {
